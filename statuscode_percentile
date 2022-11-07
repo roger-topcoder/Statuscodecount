@@ -1,0 +1,31 @@
+import json
+
+status_code_2xx_count = 0
+status_code_4xx_count = 0
+status_code_5xx_count = 0
+print("Started Reading JSON file which contains multiple JSON document")
+count = 0
+with open('logs.txt') as f:  
+  for jsonObj in f:       
+    logDict = json.loads(jsonObj)       
+    print(logDict["response"])       
+    statusCode = logDict["response"]["statusCode"]        
+    print(type(statusCode))        
+    statusCode = str(statusCode)      
+    code = statusCode[0]       
+    count += 1        
+    if code == "2":          
+    status_code_2xx_count += 1       
+    if code =="4":           
+    status_code_4xx_count += 1      
+    if code == "5":           
+    status_code_5xx_count += 1
+print(status_code_2xx_count)
+print(count)
+x2 = float((status_code_2xx_count)*(100/count))
+x4 = float((status_code_4xx_count)*(100/count))
+x5 = float((status_code_5xx_count)*(100/count))
+print("Percentile of 2xx status code =" + str(x2))
+print("Percentile of 4xx status code =" + str(x4))
+print("Percentile of 5xx status code =" + str(x5))
+
